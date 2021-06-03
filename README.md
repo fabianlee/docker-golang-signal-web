@@ -7,6 +7,8 @@ sending OS level signals examples:
   sudo kill -SIGINT <PID>
   sudo kill -SIGUSR1 <PID>
 
+docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
+
 # Environment variables
 
 * PORT - listen port, defaults to 8080

@@ -27,9 +27,9 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@HEAD
+        uses: docker/metadata-action@v4
         with:
-          images: flee999/docker-golang-signal-web
+          images: fabianlee/docker-golang-signal-web
 
 #      - name: build and push docker image
 #        uses: docker/build-push-action

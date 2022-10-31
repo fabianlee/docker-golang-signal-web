@@ -45,10 +45,13 @@ docker-logs:
 docker-stop:
 	$(DOCKERCMD) stop $(PROJECT)
 
-
 ## pushes to $(DOCKERCMD)hub
 docker-push:
 	$(DOCKERCMD) push $(OPV)
+
+# test source program build from host
+golang-build-test:
+	go build src/main.go
 
 ## pushes to kubernetes cluster
 k8s-apply:

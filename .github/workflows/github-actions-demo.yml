@@ -39,10 +39,10 @@ jobs:
         with:
           images: fabianlee/docker-golang-signal-web
 
-#      - name: build and push docker image
-#        uses: docker/build-push-action
-#        with:
-#          context: .
-#          push: true
-#          tags: ${{ steps.meta.outputs.tags }}
-#          labels: ${{ steps.meta.outputs.labels }}
+      - name: build and push docker image
+        uses: docker/build-push-action
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

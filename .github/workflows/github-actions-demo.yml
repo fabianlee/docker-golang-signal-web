@@ -40,7 +40,7 @@ jobs:
           images: fabianlee/docker-golang-signal-web
 
       - name: build and push docker image
-        uses: docker/build-push-action
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true

@@ -40,9 +40,10 @@ jobs:
           images: fabianlee/docker-golang-signal-web
 
       - name: build golang
-        uses: actions/setu-go@v3
+        uses: actions/setup-go@v3
         with:
           go-version: '^1.19.2'
+          cache: true
 
       - name: build and push docker image
         uses: docker/build-push-action@v3

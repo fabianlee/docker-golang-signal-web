@@ -6,6 +6,8 @@ RUN mkdir /build
 ADD src/*.go /build/
 WORKDIR /build
 
+ENV SHELL /bin/bash
+
 # accept override of value from --build-args
 ARG MY_VERSION=0.1.1
 ENV MY_VERSION=$MY_VERSION

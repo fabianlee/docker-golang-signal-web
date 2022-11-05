@@ -31,3 +31,13 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 newtag=v1.0.0; git tag $newtag && git push origin $newtag
 git commit -a -m "new OCI image built by Github Actions $newtag" && git push
 ```
+
+# Deleting tag
+
+```
+tagtodel=v1.0.1
+# delete locally
+git tag -d $tagtodel
+# delete remotely
+git push origin :refs/tags/$tagtodel
+```

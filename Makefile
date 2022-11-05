@@ -11,11 +11,18 @@ BUILD_TIME := $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 # unique id from last git commit
 MY_GITREF := $(shell git rev-parse --short HEAD)
 
+BUILT_BY := Dockerfile
+BUILD_ARGS := --build-arg MY_VERSION=$(VERSION) --build-arg MY_BUILDTIME=$(BUILD_TIME) --build-arg MY_BUILTBY=$(BUILT_BY)
+
 
 ## builds docker image
 docker-build:
 	echo MY_GITREF is $(MY_GITREF)
-	$(DOCKERCMD) build --build-arg MY_VERSION=$(VERSION) -f Dockerfile -t $(OPV) .
+	$(DOCKERCMD) build $(BUILD_ARGS) -f Dockerfile -t $(OPV) .
+
+docker-builder-then-stop:
+	echo MY_GITREF is $(MY_GITREF)
+	$(DOCKERCMD) build --target builder $(BUILD_ARGS) -f Dockerfile -t $(OPV) .
 
 ## cleans docker image
 clean:
@@ -24,6 +31,11 @@ clean:
 ## runs container in foreground
 docker-test-fg:
 	$(DOCKERCMD) run -it -p $(WEBPORT) --rm $(OPV)
+
+docker-hub-pull-latest:
+	git describe --tags
+	docker pull $(OWNER)/$(PROJECT):latest
+	$(DOCKERCMD) run -it -p $(WEBPORT) --rm $(OWNER)/$(PROJECT):latest
 
 ## runs container in foreground, override entrypoint to use use shell
 docker-test-cli:
@@ -50,8 +62,13 @@ docker-push:
 	$(DOCKERCMD) push $(OPV)
 
 # test source program build from host
-golang-build-test:
-	go build src/main.go
+golang-build-local:
+	mkdir -p build
+	cp src/main.go build/main.go
+	cd build && \
+	[ -f go.mod ] || go mod init $(PROJECT) && \
+	go mod tidy && \
+	go build -ldflags "-X main.Version=$(VERSION) -X main.BuildTime=$(BUILD_TIME) -X main.BuiltBy=makefile" main.go
 
 ## pushes to kubernetes cluster
 k8s-apply:

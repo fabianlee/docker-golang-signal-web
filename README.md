@@ -23,3 +23,11 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 * docker-run-bg (runs container in background)
 * k8s-apply (applies deployment to kubernetes cluster)
 * k8s-delete (removes deployment on kubernetes cluster)
+
+
+# Pushing new container image using Github Actions
+
+```
+newtag=v1.0.0; git tag $newtag && git push origin $newtag
+git commit -a -m "new OCI image built by Github Actions $newtag" && git push
+```

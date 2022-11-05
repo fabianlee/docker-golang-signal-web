@@ -7,9 +7,13 @@ import (
     "os"
     "os/signal"
     "syscall"
-    //"time"
+    "github.com/pborman/uuid"
 )
 
+// can be overriden with -ldflags
+var Version = "0.0.0"
+var BuildTime = "n/a"
+var BuiltBy = "n/a"
 
 func StartWebServer() {
 
@@ -62,7 +66,7 @@ func getenv(key, fallback string) string {
     }
     return value
 }
-// non-graceful and abrupt exit
+// invoked by GET request (not SIGNAL)
 func handleShutdown(w http.ResponseWriter, r *http.Request) {
     log.Printf("About to abruptly exit")
     os.Exit(0)
@@ -78,6 +82,13 @@ func recieveSignalLoop(sigc chan os.Signal) {
 }
 
 func main() {
+
+    fmt.Println("Version: ",Version)
+    fmt.Println("BuildTime: ",BuildTime)
+    fmt.Println("BuiltBy: ",BuiltBy)
+
+    uuidWithHyphen := uuid.NewRandom()
+    fmt.Println(uuidWithHyphen)
 
     sigc := make(chan os.Signal, 1)
     signal.Notify(sigc,

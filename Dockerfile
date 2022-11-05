@@ -1,7 +1,7 @@
 #
 # builder image
 #
-FROM golang:1.16.3-buster as builder
+FROM golang:1.19.3-buster as builder
 RUN mkdir /build
 ADD src/* /build/
 WORKDIR /build
@@ -17,10 +17,9 @@ ARG MY_BUILDTIME=now
 ENV MY_BUILDTIME=$MY_BUILDTIME
 
 # create module, fetch dependencies, then build
-#RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.Version=${MY_VERSION} -X main.BuildTime=${MY_BUILDTIME}" -a
-RUN go mod init fabianlee.org/docker-golang-signal-web \
-   && go get -d -u ./.. \
-   && CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.Version=${MY_VERSION} -X main.BuildTime=${MY_BUILDTIME} -X main.BuiltBy=${MY_BUILTBY}" -a -o fabianlee.org/main .
+RUN go mod init fabianlee \
+   && go mod tidy \
+   && CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.Version=${MY_VERSION} -X main.BuildTime=${MY_BUILDTIME} -X main.BuiltBy=${MY_BUILTBY}" main.go
 
 
 #
@@ -28,12 +27,12 @@ RUN go mod init fabianlee.org/docker-golang-signal-web \
 #
 #FROM alpine:3.13.5
 # could have used either alpine or busybox
-# busybox-glibc (versus musl) would have better compatability with Debian, but that is not an issue here
-FROM busybox:1.32.1-glibc
+# busybox-glibc (versus musl) has better compatability with Debian, but that is not an issue here
+FROM busybox:1.34.1-glibc
 
 # copy golang binary into container
 WORKDIR /root
-COPY --from=builder /build/fabianlee.org/main .
+COPY --from=builder /build/main .
 
 # executable
 ENTRYPOINT [ "./main" ]

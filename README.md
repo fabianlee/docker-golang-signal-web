@@ -1,21 +1,22 @@
 # Summary
 Golang http web server running by default on port 8080 that is intended for testing OS level signal catching
 
-Image is based on busybox:1.32.1-glibc, is about ~11Mb because it takes advantage of multi-stage building
-
-sending OS level signals examples:
-  sudo kill -SIGINT <PID>
-  sudo kill -SIGUSR1 <PID>
+Image is based on busybox:1.32.1-glibc, is small (~11Mb) because it takes advantage of multi-stage building
 
 docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
+
+# Example of sending OS level signals
+
+```
+  sudo kill -SIGINT <PID>
+  sudo kill -SIGUSR1 <PID>
+```
 
 # Environment variables
 
 * PORT - listen port, defaults to 8080
 * APP_CONTEXT - base context path of app, defaults to '/'
 
-# Prerequisites
-* make utility (sudo apt-get install make)
 
 # Makefile targets
 * docker-build (builds image)

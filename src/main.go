@@ -11,7 +11,7 @@ import (
 )
 
 // can be overriden with -ldflags
-var Version = "0.0.0"
+var Version = "n/a"
 var BuildTime = "n/a"
 var BuiltBy = "n/a"
 

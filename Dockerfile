@@ -20,7 +20,7 @@ ENV MY_BUILDTIME=$MY_BUILDTIME
 #RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.Version=${MY_VERSION} -X main.BuildTime=${MY_BUILDTIME}" -a
 RUN go mod init fabianlee.org/docker-golang-signal-web \
    && go get -d -u ./.. \
-   && CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.Version=${MY_VERSION} -X main.BuildTime=${MY_BUILDTIME}" -a -o fabianlee.org/main .
+   && CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.Version=${MY_VERSION} -X main.BuildTime=${MY_BUILDTIME} -X main.BuiltBy=${MY_BUILTBY}" -a -o fabianlee.org/main .
 
 
 #

@@ -70,7 +70,8 @@ jobs:
           # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
           # push to both docker hub and Github Container Registry
           images: |
-            docker.io/${{ github.actor }}/${{ github.repository }}
+            ${{ github.actor }}/${{ github.repository }}
+          #  docker.io/${{ github.actor }}/${{ github.repository }}
           #  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           #  ${{ github.actor }}/${{ github.repository }}
           tags: |
@@ -82,7 +83,7 @@ jobs:
 
       # Go environment
       - name: setup Go Lang
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v3.0.2
         with:
           go-version: '^1.19.2'
       - run: go version

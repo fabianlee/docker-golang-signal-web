@@ -15,7 +15,7 @@ env:
 
 jobs:
   build-oci-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22
 
     permissions:
       contents: read

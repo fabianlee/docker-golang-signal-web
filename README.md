@@ -29,8 +29,16 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 # Pushing new container image using Github Actions
 
 ```
-git commit -a -m "any changes for upcoming tag"
-newtag=v1.0.1; git tag $newtag && git push origin $newtag
+# get latest semantic version tag
+semantic_version=$(git describe --tags | grep -Po '^v[0-9]*.[0-9]*.[0-9]*')
+major_minor=$(echo "$semantic_version" | cut -d'.' -f1-2)
+patch=$(echo "$semantic_version" | cut -d'.' -f3)
+((patch++))
+
+newtag="${major_minor}.${patch}"
+echo "old version: $semantic_version new_version: ${newtag}"
+git commit -a -m "any changes for new tag $newtag"
+git tag $newtag && git push origin $newtag
 ```
 
 # Deleting tag

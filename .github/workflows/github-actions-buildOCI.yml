@@ -56,12 +56,12 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       # Github container registry credentials
-      #- name: Log in to the Github Container registry ${{ env.REGISTRY }} as ${{ github.actor }}
-      #  uses: docker/login-action@v2
-      #  with:
-      #    registry: ${{ env.REGISTRY }}
-      #    username: ${{ github.actor }}
-      #    password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Log in to the Github Container registry ${{ env.REGISTRY }} as ${{ github.actor }}
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # tags and labels
       - name: Extract metadata (tags, labels) for image ${{ env.FULL_IMAGE_NAME }}
@@ -76,9 +76,7 @@ jobs:
 
           images: |
             ${{ env.FULL_IMAGE_NAME }}
-          #  docker.io/${{ github.actor }}/${{ github.repository }}
-          #  ${{ env.REGISTRY }}/${{ env.FULL_IMAGE_NAME }}
-          #  ${{ github.actor }}/${{ github.repository }}
+            ${{ env.REGISTRY }}/${{ env.FULL_IMAGE_NAME }}
           tags: |
             type=semver,pattern={{version}}
             type=ref,event=pr

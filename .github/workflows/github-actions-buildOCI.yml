@@ -79,6 +79,7 @@ jobs:
             type=semver,pattern={{version}}
             # in addition to full semantic version (x.y.z) would also create (x.y)
             #type=semver,pattern={{major}}.{{minor}}
+      - run: echo "${{ fromJSON(steps.meta.images.json) }}"
 
       # Go environment
       - name: setup Go Lang

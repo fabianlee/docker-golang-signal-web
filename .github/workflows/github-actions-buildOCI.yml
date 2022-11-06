@@ -70,16 +70,15 @@ jobs:
           # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
           # push to both docker hub and Github Container Registry
           images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
             docker.io/${{ github.actor }}/${{ github.repository }}
+          #  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           #  ${{ github.actor }}/${{ github.repository }}
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
             type=semver,pattern={{version}}
+            #type=ref,event=branch
+            #type=ref,event=pr
             # in addition to full semantic version (x.y.z) would also create (x.y)
             #type=semver,pattern={{major}}.{{minor}}
-      - run: echo "${{ fromJSON(steps.meta.images.json) }}"
 
       # Go environment
       - name: setup Go Lang

@@ -71,7 +71,7 @@ jobs:
           # push to both docker hub and Github Container Registry
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-            #${{ github.actor }}/${{ github.repository }}
+            ${{ github.actor }}/${{ github.repository }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr

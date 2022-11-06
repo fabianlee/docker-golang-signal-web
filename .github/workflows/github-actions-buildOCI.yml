@@ -71,7 +71,7 @@ jobs:
           # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
           # push to both docker hub and Github Container Registry
           images: |
-            docker.io/${{ github.actor }}/${{ github.repository }}
+            ${{ github.actor }}/${{ github.repository }}
           #  docker.io/${{ github.actor }}/${{ github.repository }}
           #  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           #  ${{ github.actor }}/${{ github.repository }}

@@ -1,6 +1,6 @@
 OWNER := fabianlee
 PROJECT := docker-golang-signal-web
-VERSION := 1.0.0
+VERSION := 1.0.1
 OPV := $(OWNER)/$(PROJECT):$(VERSION)
 WEBPORT := 8080:8080
 

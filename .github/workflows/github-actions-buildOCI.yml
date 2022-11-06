@@ -89,7 +89,7 @@ jobs:
 
       # build OCI image and push to Docker Hub
       - name: build and push docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v3.2.0
         with:
           context: .
           push: true

@@ -70,7 +70,7 @@ jobs:
         with:
           # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
           # push to both docker hub and Github Container Registry
-          images: ${{ github.actor }}/${{ github.repository }}
+          images: fabianlee/docker-golang-signal-web
           #images: |
           #  ${{ github.actor }}/${{ github.repository }}
           #  docker.io/${{ github.actor }}/${{ github.repository }}

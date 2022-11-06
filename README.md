@@ -29,8 +29,8 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 # Pushing new container image using Github Actions
 
 ```
-newtag=v1.0.0; git tag $newtag && git push origin $newtag
-git commit -a -m "new OCI image built by Github Actions $newtag" && git push
+git commit -a -m "any changes for upcoming tag"
+newtag=v1.0.1; git tag $newtag && git push origin $newtag
 ```
 
 # Deleting tag

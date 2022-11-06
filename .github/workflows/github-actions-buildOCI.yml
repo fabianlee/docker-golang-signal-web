@@ -11,7 +11,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  FULL_IMAGE_NAME: ${{ github.repository }} # full: owner/image
 
 jobs:
   build-oci-image:
@@ -64,22 +64,25 @@ jobs:
       #    password: ${{ secrets.GITHUB_TOKEN }}
 
       # tags and labels
-      - name: Extract metadata (tags, labels) for image ${{ env.IMAGE_NAME }}
+      - name: Extract metadata (tags, labels) for image ${{ env.FULL_IMAGE_NAME }}
         id: meta
         uses: docker/metadata-action@v4
         with:
           # https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
           # push to both docker hub and Github Container Registry
-          images: fabianlee/docker-golang-signal-web
-          #images: |
-          #  ${{ github.actor }}/${{ github.repository }}
+
+          # works!
+          #images: fabianlee/docker-golang-signal-web
+
+          images: |
+            ${{ env.FULL_IMAGE_NAME }}
           #  docker.io/${{ github.actor }}/${{ github.repository }}
-          #  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          #  ${{ env.REGISTRY }}/${{ env.FULL_IMAGE_NAME }}
           #  ${{ github.actor }}/${{ github.repository }}
-          #tags: |
-          #  type=semver,pattern={{version}}
-          #  type=ref,event=pr
-          #  type=ref,event=branch
+          tags: |
+            type=semver,pattern={{version}}
+            type=ref,event=pr
+            type=ref,event=branch
             # in addition to full semantic version (x.y.z) would also create (x.y)
             #type=semver,pattern={{major}}.{{minor}}
 

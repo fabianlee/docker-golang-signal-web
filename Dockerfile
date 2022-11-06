@@ -10,11 +10,8 @@ WORKDIR /build
 
 # accept override of value from --build-args
 ARG MY_VERSION=0.1.1
-ENV MY_VERSION=$MY_VERSION
-
-# accept override of value from --build-args
 ARG MY_BUILDTIME=now
-ENV MY_BUILDTIME=$MY_BUILDTIME
+ENV MY_BUILTBY=unknown
 
 # create module, fetch dependencies, then build
 RUN go mod init fabianlee \
@@ -26,8 +23,7 @@ RUN go mod init fabianlee \
 # generate small final image for end users
 #
 #FROM alpine:3.13.5
-# could have used either alpine or busybox
-# busybox-glibc (versus musl) has better compatability with Debian, but that is not an issue here
+# busybox-glibc (versus Alpine's musl) matches Debian, but that is not a techinical issue here. I simply chose to prefer glibc
 FROM busybox:1.34.1-glibc
 
 # copy golang binary into container

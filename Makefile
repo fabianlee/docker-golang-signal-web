@@ -61,7 +61,7 @@ docker-stop:
 docker-push:
 	$(DOCKERCMD) push $(OPV)
 
-# test source program build from host
+# test source program build from host (must have GoLang installed)
 golang-build-local:
 	mkdir -p build
 	cp src/main.go build/main.go

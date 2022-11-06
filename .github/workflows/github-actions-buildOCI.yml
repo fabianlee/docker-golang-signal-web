@@ -75,8 +75,8 @@ jobs:
           #  ${{ github.actor }}/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
+            type=ref,event=pr
             #type=ref,event=branch
-            #type=ref,event=pr
             # in addition to full semantic version (x.y.z) would also create (x.y)
             #type=semver,pattern={{major}}.{{minor}}
 

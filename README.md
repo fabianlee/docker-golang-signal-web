@@ -26,18 +26,23 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 * k8s-delete (removes deployment on kubernetes cluster)
 
 
-# Pushing new container image using Github Actions
+# Github Actions will construct OCI image for semantic tag
 
 ```
-# get latest semantic version tag
+# show latest tags
+git tag
+git describe --tags
+
+# get latest semantic version tag, construct patch+1
 semantic_version=$(git describe --tags | grep -Po '^v[0-9]*.[0-9]*.[0-9]*')
 major_minor=$(echo "$semantic_version" | cut -d'.' -f1-2)
 patch=$(echo "$semantic_version" | cut -d'.' -f3)
 ((patch++))
 
+# push new semantic version tag
 newtag="${major_minor}.${patch}"
 echo "old version: $semantic_version new_version: ${newtag}"
-git commit -a -m "any changes for new tag $newtag"
+git commit -a -m "changes for new tag $newtag"
 git tag $newtag && git push origin $newtag
 ```
 

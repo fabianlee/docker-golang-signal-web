@@ -20,7 +20,7 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 
 # Makefile targets
 * docker-build (builds image)
-* docker-run-fg (runs container in foreground, ctrl-C to exit)
+* docker-test-fg (runs container in foreground, ctrl-C to exit)
 * docker-run-bg (runs container in background)
 * k8s-apply (applies deployment to kubernetes cluster)
 * k8s-delete (removes deployment on kubernetes cluster)

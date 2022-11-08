@@ -56,7 +56,7 @@ git tag -d $tagtodel
 git push origin :refs/tags/$tagtodel
 ```
 
-# Commit Messages between versions (https://stackoverflow.com/questions/8136178/git-log-between-tags)[1]
+# Commit Messages between releases (https://stackoverflow.com/questions/8136178/git-log-between-tags)[1]
 
 ```
 # example

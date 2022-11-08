@@ -72,6 +72,7 @@ if [[ "$answer" == "y" ]]; then
   set -x
   git commit -a -m "changes for new tag $newtag"
   git tag $newtag && git push origin $newtag
+  git push
   gh release create $newtag -F /tmp/$newtag.log build/main
   set +x
 else

@@ -43,6 +43,7 @@ go mod tidy
 set -x
 go build -ldflags "-X main.Version=$newtag -X main.BuildTime=$BUILD_TIME -X main.BuiltBy=bash" main.go
 set +x
+cd ..
 echo "GoLang binary built as build/main"
 
 

@@ -18,9 +18,11 @@ jobs:
     # https://github.com/actions/runner-images
     runs-on: ubuntu-22.04
 
+    # https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
     permissions:
-      contents: read
-      packages: write
+      contents: read # for actions/checkout
+      packages: write # for OCI build
+      #id-token: write # for requesting OIDC JWT from 3rd party
 
     steps:
 

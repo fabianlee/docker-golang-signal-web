@@ -66,7 +66,7 @@ golang-build-local:
 	mkdir -p build
 	cp src/main.go build/main.go
 	cd build && \
-	[ -f go.mod ] || go mod init $(PROJECT) && \
+	[ -f go.mod ] || go mod init fabianlee/$(PROJECT) && \
 	go mod tidy && \
 	go build -ldflags "-X main.Version=$(VERSION) -X main.BuildTime=$(BUILD_TIME) -X main.BuiltBy=makefile" main.go
 

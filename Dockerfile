@@ -14,7 +14,7 @@ ARG MY_BUILDTIME=now
 ENV MY_BUILTBY=unknown
 
 # create module, fetch dependencies, then build
-RUN go mod init fabianlee \
+RUN go mod init fabianlee/docker-golang-signal-web \
    && go mod tidy \
    && CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.Version=${MY_VERSION} -X main.BuildTime=${MY_BUILDTIME} -X main.BuiltBy=${MY_BUILTBY}" main.go
 

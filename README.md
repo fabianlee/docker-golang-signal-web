@@ -30,7 +30,7 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 
 ```
 # show latest tags
-git tag
+git tag --sort=-committerdate
 git describe --tags
 
 # get latest semantic version tag, construct patch+1
@@ -54,6 +54,14 @@ tagtodel=v1.0.1
 git tag -d $tagtodel
 # delete remotely
 git push origin :refs/tags/$tagtodel
+```
+
+# Commit Messages between versions (https://stackoverflow.com/questions/8136178/git-log-between-tags)[1]
+
+```
+# example
+git log v1.0.2...v1.0.1 --pretty="- %s "
+
 ```
 
 

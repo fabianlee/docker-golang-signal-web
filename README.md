@@ -25,43 +25,34 @@ docker hub: https://hub.docker.com/r/fabianlee/docker-golang-signal-web
 * k8s-apply (applies deployment to kubernetes cluster)
 * k8s-delete (removes deployment on kubernetes cluster)
 
+# Create Github release
 
-# Github Actions will construct OCI image for semantic tag
+Must have [Go Lang](https://fabianlee.org/2022/10/29/golang-installing-the-go-programming-language-on-ubuntu-22-04/) compiler and [Github CLI](https://fabianlee.org/2022/04/21/github-cli-tool-for-repository-operations/) installed on local host as prerequisite.
+
+Github Actions will automatically build OCI image based on this new semantic version.
 
 ```
-# show latest tags
-git tag --sort=-committerdate
-git describe --tags
-
-# get latest semantic version tag, construct patch+1
-semantic_version=$(git describe --tags | grep -Po '^v[0-9]*.[0-9]*.[0-9]*')
-major_minor=$(echo "$semantic_version" | cut -d'.' -f1-2)
-patch=$(echo "$semantic_version" | cut -d'.' -f3)
-((patch++))
-
-# push new semantic version tag
-newtag="${major_minor}.${patch}"
-echo "old version: $semantic_version new_version: ${newtag}"
-git commit -a -m "changes for new tag $newtag"
-git tag $newtag && git push origin $newtag
+./create_new_gh_release.sh
 ```
+
 
 # Deleting tag
 
 ```
-tagtodel=v1.0.1
-# delete locally
-git tag -d $tagtodel
-# delete remotely
-git push origin :refs/tags/$tagtodel
+todel=v1.0.1
+
+# delete local tag, then remote
+git tag -d $todel && git push origin :refs/tags/$todel
 ```
 
-# Commit Messages between releases (https://stackoverflow.com/questions/8136178/git-log-between-tags)[1]
+# Deleting release
 
 ```
-# example
-git log v1.0.2...v1.0.1 --pretty="- %s "
+todel=v1.0.1
 
+# delete release and remote tag
+gh release delete $todel --cleanup-tag -y
+
+# delete local tag
+git tag -d $todel
 ```
-
-

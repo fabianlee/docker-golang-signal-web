@@ -50,14 +50,15 @@ jobs:
 
         # get commit messages
         if [ -n "$semantic_version" ]; then
-          git log HEAD...${semantic_version} --pretty="- %s " >> body.md
+          git log HEAD...${semantic_version} --pretty="* %s " > body.md
         else
-          git log --pretty="- %s " >> body.md
+          git log --pretty="* %s " > body.md
         fi
         cat body.md
         echo "newtag=$newtag" >> $GITHUB_OUTPUT
 
     - run: echo newtag is ${{ steps.newtag.outputs.newtag }}
+    - run: cat body.md
 
     #  create release with release note written to file and binary asset attached
     - uses: ncipollo/release-action@v1

@@ -16,7 +16,17 @@ jobs:
     permissions:
       contents: write
 
+
     steps:
+
+    # debug
+    - name: Dump env
+      run: env | sort
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
     - uses: actions/checkout@v3
 
     # Go environment
@@ -35,7 +45,7 @@ jobs:
     - name: get semantic tag version and release notes from commit messages
       id: curtag 
       run: |
-        curtag=${{ env.GITHUB_REF_NAME}}
+        curtag=${GITHUB_REF_NAME}
         major_minor=$(echo "$curtag" | cut -d'.' -f1-2)
         patch=$(echo "$curtag" | cut -d'.' -f3)
         ((patch--))

@@ -54,9 +54,10 @@ jobs:
         echo "# Commited Changes" > body.log
         if git tag | grep $prevtag ; then
           #git log -q ${curtag}...${prevtag} --pretty="- %s " >> body.log
-          git log -q HEAD...${prevtag} --pretty="- %s " >> body.log
+          git log -q HEAD...${prevtag} --oneline >> body.log
         else
-          git log -q --pretty="- %s " >> body.log
+          echo "got all" >> body.log
+          #git log -q --pretty="- %s " >> body.log
         fi
         echo "# End Commited Changes" >> body.log
         line_count=$(cat body.log | wc -l)

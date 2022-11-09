@@ -35,6 +35,13 @@ Github Actions will automatically build OCI image based on this new semantic ver
 ./create_new_gh_release.sh
 ```
 
+# Creating tag
+
+```
+newtag=v1.0.1
+git commit -a -m "changes for new tag $newtag" && git push
+git tag $newtag && git push origin $newtag
+```
 
 # Deleting tag
 

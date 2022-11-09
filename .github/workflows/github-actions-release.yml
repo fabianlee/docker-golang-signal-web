@@ -43,7 +43,7 @@ jobs:
 
 
     - name: get semantic tag version and release notes from commit messages
-      id: curtag 
+      id: tag 
       run: |
         curtag=${GITHUB_REF_NAME}
         major_minor=$(echo "$curtag" | cut -d'.' -f1-2)
@@ -53,14 +53,16 @@ jobs:
 
         echo "# Commited Changes" > body.md
         if git tag | grep $prevtag ; then
-          git log ${curtag}...${prevtag} --pretty="- %s " >> body.md
+          git log ${curtag}...${prevtag} --pretty="- %s \n" >> body.md
         else
-          git log --pretty="- %s " >> body.md
+          git log --pretty="- %s \n" >> body.md
         fi
 
         echo "curtag=$curtag" >> $GITHUB_OUTPUT
+        echo "prevtag=$prevtag" >> $GITHUB_OUTPUT
 
-    - run: echo curtag is ${{ steps.curtag.outputs.curtag }}
+    - run: echo curtag is ${{ steps.tag.outputs.curtag }}
+    - run: echo prevtag is ${{ steps.tag.outputs.prevtag }}
 
     #  create release with release note written to file and binary asset attached
     - uses: ncipollo/release-action@v1

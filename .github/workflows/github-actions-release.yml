@@ -51,19 +51,22 @@ jobs:
         ((patch--))
         prevtag="${major_minor}.${patch}"
 
-        echo "# Commited Changes" > body.md
+        echo "# Commited Changes" > body.log
         if git tag | grep $prevtag ; then
-          git log ${curtag}...${prevtag} --pretty="- %s \n" >> body.md
+          git log ${curtag}...${prevtag} --pretty="- %s " >> body.log
         else
-          git log --pretty="- %s \n" >> body.md
+          git log --pretty="- %s " >> body.log
         fi
+        line_count=$(cat body.log | wc -l)
 
         echo "curtag=$curtag" >> $GITHUB_OUTPUT
         echo "prevtag=$prevtag" >> $GITHUB_OUTPUT
+        echo "line_count=$line_count" >> $GITHUB_OUTPUT
 
     - run: echo curtag is ${{ steps.tag.outputs.curtag }}
     - run: echo prevtag is ${{ steps.tag.outputs.prevtag }}
-    - run: cat body.md
+    - run: echo line_count is ${{ steps.tag.outputs.line_count }}
+    - run: cat body.log
 
     #  create release with release note written to file and binary asset attached
     - uses: ncipollo/release-action@v1
@@ -71,5 +74,5 @@ jobs:
         name: ${{ env.GITHUB_REF_NAME }}
         tag: ${{ env.GITHUB_REF_NAME }}
         artifacts: "src/main"
-        bodyFile: "body.md"
+        bodyFile: "body.log"
         token: ${{ secrets.GITHUB_TOKEN }}

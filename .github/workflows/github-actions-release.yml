@@ -33,7 +33,6 @@ jobs:
     - name: get current semantic version
       id: semantic_version
       run: |
-        if git tag --sort=committerdate | grep -q ^v ; then
         semantic_version=$(git tag --sort=-committerdate | grep ^v | grep -Po '^v[0-9]*.[0-9]*.[0-9]*' | head -n1)
         echo "semantic_version=$semantic_version" >> $GITHUB_OUTPUT
     - run: echo ${{ steps.semantic_version.outputs.semantic_version }}

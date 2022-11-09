@@ -54,9 +54,9 @@ jobs:
         else
           git log --pretty="- %s " | tee body.md
         fi
-
         echo "newtag=$newtag" >> $GITHUB_OUTPUT
-    - run: echo ${{ steps.newtag.outputs.newtag }}
+
+    - run: echo newtag is ${{ steps.newtag.outputs.newtag }}
 
     #  create release with release note written to file and binary asset attached
     - uses: ncipollo/release-action@v1
@@ -64,5 +64,5 @@ jobs:
         name: ${{ steps.newtag.outputs.newtag }}
         #tag: ""
         artifacts: "src/main"
-        bodyFile: "body.md
+        bodyFile: "body.md"
         token: ${{ secrets.GITHUB_TOKEN }}

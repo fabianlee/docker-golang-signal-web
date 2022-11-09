@@ -63,6 +63,7 @@ jobs:
 
     - run: echo curtag is ${{ steps.tag.outputs.curtag }}
     - run: echo prevtag is ${{ steps.tag.outputs.prevtag }}
+    - run: cat body.md
 
     #  create release with release note written to file and binary asset attached
     - uses: ncipollo/release-action@v1

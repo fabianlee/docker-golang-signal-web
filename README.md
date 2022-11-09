@@ -56,3 +56,7 @@ gh release delete $todel --cleanup-tag -y
 # delete local tag
 git tag -d $todel
 ```
+
+
+
+

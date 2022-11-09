@@ -1,11 +1,13 @@
-name: Releases
+name: build-release-binary
+
+run-name: Create Github Release
 
 on: 
   push:
-    branches:
-    - main
-    #tags:
-    #- '*'
+    #branches:
+    #- main
+    tags:
+    - 'r*'
 
 jobs:
 
@@ -33,7 +35,7 @@ jobs:
     - name: get current semantic version
       id: semantic_version
       run: |
-        semantic_version=$(git tag --sort=-committerdate | grep ^v | grep -Po '^v[0-9]*.[0-9]*.[0-9]*' | head -n1)
+        semantic_version=$(git tag --sort=-committerdate | grep ^r | grep -Po '^r[0-9]*.[0-9]*.[0-9]*' | head -n1)
         echo "semantic_version=$semantic_version" >> $GITHUB_OUTPUT
     - run: echo ${{ steps.semantic_version.outputs.semantic_version }}
 
@@ -42,7 +44,7 @@ jobs:
       run: |
         if git tag --sort=committerdate | grep -q ^v ; then
 
-        semantic_version=$(git tag --sort=-committerdate | grep ^v | grep -Po '^v[0-9]*.[0-9]*.[0-9]*' | head -n1)
+        semantic_version=$(git tag --sort=-committerdate | grep ^r | grep -Po '^r[0-9]*.[0-9]*.[0-9]*' | head -n1)
         major_minor=$(echo "$semantic_version" | cut -d'.' -f1-2)
         patch=$(echo "$semantic_version" | cut -d'.' -f3)
         ((patch++))
@@ -50,7 +52,7 @@ jobs:
 
         else
         semantic_version=""
-        newtag="v1.0.0"
+        newtag="r1.0.0"
         fi
 
         echo "# old version: $semantic_version new_version: ${newtag}" | tee body.md

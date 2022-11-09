@@ -42,14 +42,16 @@ jobs:
         else
         semantic_version=""
         newtag="v1.0.0"
+        export newtag2="myvalue"
         fi
 
         echo "# old version: $semantic_version new_version: ${newtag}" | tee body.md
+    - name: use newtag ${{ env.newtag }} and newtag2 ${{ env.newtag2 }}
 
     #  release
     - uses: ncipollo/release-action@v1
       with:
+        name: ${{ env.newtag }}
         artifacts: "src/main"
         bodyFile: "body.md"
-        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
-
+        token: ${{ secrets.GITHUB_TOKEN }}

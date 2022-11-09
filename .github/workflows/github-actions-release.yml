@@ -53,7 +53,8 @@ jobs:
 
         echo "# Commited Changes" > body.log
         if git tag | grep $prevtag ; then
-          git log -q ${curtag}...${prevtag} --pretty="- %s " >> body.log
+          #git log -q ${curtag}...${prevtag} --pretty="- %s " >> body.log
+          git log -q HEAD...${prevtag} --pretty="- %s " >> body.log
         else
           git log -q --pretty="- %s " >> body.log
         fi
@@ -64,6 +65,7 @@ jobs:
         echo "prevtag=$prevtag" >> $GITHUB_OUTPUT
         echo "line_count=$line_count" >> $GITHUB_OUTPUT
 
+    - run: git version
     - run: echo curtag is ${{ steps.tag.outputs.curtag }}
     - run: echo prevtag is ${{ steps.tag.outputs.prevtag }}
     - run: echo line_count is ${{ steps.tag.outputs.line_count }}

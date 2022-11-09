@@ -55,9 +55,11 @@ jobs:
         curtag=${GITHUB_REF_NAME}
         major_minor=$(echo "$curtag" | cut -d'.' -f1-2)
         patch=$(echo "$curtag" | cut -d'.' -f3)
-        ((patch--))
+        # avoid empty patch number
+        [ -n "$patch" ] && ((patch--)) || patch=".x"
         prevtag="${major_minor}.${patch}"
 
+        echo "" > body.log
         if git tag | grep $prevtag ; then
           git log -q ${curtag}...${prevtag} --pretty="- %s" -q --no-color >> body.log
         else

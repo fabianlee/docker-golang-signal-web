@@ -28,6 +28,8 @@ jobs:
       run: echo "$GITHUB_CONTEXT"
 
     - uses: actions/checkout@v3
+      with:
+        ref: main
 
     # Go environment
     - name: setup Go Lang

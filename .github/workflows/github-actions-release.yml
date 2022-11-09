@@ -29,7 +29,17 @@ jobs:
         go mod tidy
         go build -ldflags "-X main.Version=$(VERSION) -X main.BuildTime=$(BUILD_TIME) -X main.BuiltBy=makefile" main.go
 
+
+    - name: get current semantic version
+      id: semantic_version
+      run: |
+        if git tag --sort=committerdate | grep -q ^v ; then
+        semantic_version=$(git tag --sort=-committerdate | grep ^v | grep -Po '^v[0-9]*.[0-9]*.[0-9]*' | head -n1)
+        echo "semantic_version=$semantic_version" >> $GITHUB_OUTPUT
+    - run: echo ${{ steps.semantic_version.outputs.semantic_version }}
+
     - name: get range of commit messages
+      id: newtag
       run: |
         if git tag --sort=committerdate | grep -q ^v ; then
 
@@ -42,17 +52,17 @@ jobs:
         else
         semantic_version=""
         newtag="v1.0.0"
-        export newtag2="myvalue"
         fi
 
         echo "# old version: $semantic_version new_version: ${newtag}" | tee body.md
-    - name: use newtag ${{ env.newtag }} and newtag2 ${{ env.newtag2 }}
-      run: echo use newtag ${{ env.newtag }} and newtag2 ${{ env.newtag2 }}
+        echo "newtag=$newtag" >> $GITHUB_OUTPUT
+    - run: echo ${{ steps.newtag.outputs.newtag }}
 
     #  release
     - uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.newtag }}
+        name: ${{ steps.newtag.outputs.newtag }}
+        tag: ""
         artifacts: "src/main"
         bodyFile: "body.md"
         token: ${{ secrets.GITHUB_TOKEN }}

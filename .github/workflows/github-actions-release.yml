@@ -47,6 +47,7 @@ jobs:
 
         echo "# old version: $semantic_version new_version: ${newtag}" | tee body.md
     - name: use newtag ${{ env.newtag }} and newtag2 ${{ env.newtag2 }}
+      run: echo use newtag ${{ env.newtag }} and newtag2 ${{ env.newtag2 }}
 
     #  release
     - uses: ncipollo/release-action@v1

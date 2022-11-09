@@ -1,6 +1,6 @@
 name: build-oci-image
 
-run-name: Build OCI Image as ${{ github.actor }}
+run-name: Build OCI Image for GoLang binary
 
 on:
   push:

@@ -1,6 +1,6 @@
 name: build-release-binary
 
-run-name: Create Github Release
+run-name: Create Github Release for GoLang binary
 
 on: 
   push:

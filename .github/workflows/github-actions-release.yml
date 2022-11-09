@@ -50,9 +50,9 @@ jobs:
 
         # get commit messages
         if [ -n "$semantic_version" ]; then
-          git log HEAD...${semantic_version} --pretty="- %s " | tee body.log
+          git log HEAD...${semantic_version} --pretty="- %s " | tee body.md
         else
-          git log --pretty="- %s " | tee body.log
+          git log --pretty="- %s " | tee body.md
         fi
 
         echo "newtag=$newtag" >> $GITHUB_OUTPUT
@@ -64,5 +64,5 @@ jobs:
         name: ${{ steps.newtag.outputs.newtag }}
         #tag: ""
         artifacts: "src/main"
-        bodyFile: "body.log"
+        bodyFile: "body.md
         token: ${{ secrets.GITHUB_TOKEN }}

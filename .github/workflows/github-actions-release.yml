@@ -41,9 +41,9 @@ jobs:
         my_buildtime=$(date -u '+%Y-%m-%d_%H:%M:%S')
         go version
         cd src
-        go mod init fabianlee/docker-golang-signal-web
+        go mod init ${GITHUB_REPOSITORY}
         go mod tidy
-        go build -ldflags "-X main.Version=$(GITHUB_REF_NAME) -X main.BuildTime=$my_buildtime -X main.BuiltBy=github-actions" main.go
+        go build -ldflags "-X main.Version=${GITHUB_REF_NAME} -X main.BuildTime=$my_buildtime -X main.BuiltBy=github-actions" main.go
 
     - run: git version
     - run: git branch
